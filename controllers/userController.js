@@ -4,19 +4,19 @@ const authUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Auth user' });
 });
 
-const registerUser = asyncHandler(async, (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'RegisterUser' });
 });
 
-const logoutUser = asyncHandler(async, (req, res) => {
+const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Logout user' });
 });
 
-const getUserProfile = asyncHandler(async, (req, res) => {
+const getUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Get user profile' });
 });
 
-const updateUserProfile = asyncHandler(async, (req, res) => {
+const updateUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Update user' });
 });
 
