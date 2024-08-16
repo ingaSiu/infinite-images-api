@@ -1,7 +1,11 @@
 import express from 'express';
 
+const port = 5000;
+
 const app = express();
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.get('/', (req, res) => res.send('Server is ready'));
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
