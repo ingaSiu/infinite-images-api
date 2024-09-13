@@ -99,4 +99,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser, logoutUser, getUserProfile, updateUserProfile };
+const getFavorites = () => {};
+
+const addFavorite = () => {};
+
+export { authUser, registerUser, logoutUser, getUserProfile, updateUserProfile, getFavorites, addFavorite };

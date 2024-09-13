@@ -1,5 +1,7 @@
 import {
+  addFavorite,
   authUser,
+  getFavorites,
   getUserProfile,
   logoutUser,
   registerUser,
