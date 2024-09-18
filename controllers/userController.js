@@ -110,7 +110,6 @@ const addFavorite = asyncHandler(async (req, res) => {
     const alreadyFavorited = user.favorites.some((fav) => fav.id === id);
 
     if (alreadyFavorited) {
-      throw error;
       res.status(400);
       throw new Error('Image is already in favorites');
     }
@@ -119,12 +118,40 @@ const addFavorite = asyncHandler(async (req, res) => {
 
     await user.save();
   } else {
-    throw error;
     res.status(404);
     throw new Error('User not found');
   }
 });
 
-const deleteFavorite = () => {};
+const deleteFavorite = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const { id } = req.params;
 
-export { authUser, registerUser, logoutUser, getUserProfile, updateUserProfile, getFavorites, addFavorite };
+  if (user) {
+    const updatedFavorites = user.favorites.filter((fav) => fav.id !== id);
+
+    if (updatedFavorites.length === user.favorites.length) {
+      res.status(404);
+      throw new Error('Image not found in favorites');
+    }
+
+    user.favorites = updatedFavorites;
+    await user.save();
+
+    res.status(200).json({ message: 'Favorite image removed' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+export {
+  authUser,
+  registerUser,
+  logoutUser,
+  getUserProfile,
+  updateUserProfile,
+  getFavorites,
+  addFavorite,
+  deleteFavorite,
+};
