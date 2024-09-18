@@ -101,6 +101,30 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 const getFavorites = () => {};
 
-const addFavorite = () => {};
+const addFavorite = asyncHandler(async (req, res) => {
+  const { id, url } = req.body;
+
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    const alreadyFavorited = user.favorites.some((fav) => fav.id === id);
+
+    if (alreadyFavorited) {
+      throw error;
+      res.status(400);
+      throw new Error('Image is already in favorites');
+    }
+    const favorite = { id, url };
+    user.favorites.push(favorite);
+
+    await user.save();
+  } else {
+    throw error;
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+const deleteFavorite = () => {};
 
 export { authUser, registerUser, logoutUser, getUserProfile, updateUserProfile, getFavorites, addFavorite };
