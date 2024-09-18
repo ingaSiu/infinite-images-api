@@ -17,6 +17,6 @@ router.post('/', registerUser);
 router.post('/auth', authUser);
 router.post('/logout', logoutUser);
 router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile);
-router.route('/profile/favorite').get(protect, getFavorites).post(protect, addFavorite);
+router.route('/favorites').get(protect, getFavorites).post(protect, addFavorite);
 
 export default router;
