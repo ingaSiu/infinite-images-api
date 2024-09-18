@@ -1,5 +1,6 @@
+import mongoose, { Schema } from 'mongoose';
+
 import bcrypt from 'bcryptjs';
-import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema(
   {
@@ -16,6 +17,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    favorites: [
+      {
+        type: Schema.Types.Mixed,
+        required: false,
+      },
+    ],
   },
   {
     timestamps: true,
