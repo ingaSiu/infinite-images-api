@@ -16,8 +16,6 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
     });
   } else {
-    // TODO:remove this
-    throw error;
     res.status(401);
     throw new Error('Invalid email or password');
   }
@@ -47,8 +45,6 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
     });
   } else {
-    // TODO:remove this
-    throw error;
     res.status(400);
     throw new Error('Invalid user data');
   }
@@ -92,14 +88,21 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
     });
   } else {
-    // TODO:remove this
-    throw error;
     res.status(404);
     throw new Error('User not found');
   }
 });
 
-const getFavorites = () => {};
+const getFavorites = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.status(200).json(user.favorites || []);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
 
 const addFavorite = asyncHandler(async (req, res) => {
   const { id, url } = req.body;
