@@ -110,7 +110,7 @@ const addFavorite = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    const alreadyFavorited = user.favorites.some((fav) => fav.id === id);
+    const alreadyFavorited = user.favorites.some((fav) => fav.id === parseInt(id));
 
     if (alreadyFavorited) {
       res.status(400);
@@ -132,7 +132,7 @@ const deleteFavorite = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   if (user) {
-    const updatedFavorites = user.favorites.filter((fav) => fav.id !== id);
+    const updatedFavorites = user.favorites.filter((fav) => fav.id !== parseInt(id));
 
     if (updatedFavorites.length === user.favorites.length) {
       res.status(404);
