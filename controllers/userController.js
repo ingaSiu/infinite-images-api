@@ -120,6 +120,7 @@ const addFavorite = asyncHandler(async (req, res) => {
     user.favorites.push(favorite);
 
     await user.save();
+    res.status(201).json(favorite);
   } else {
     res.status(404);
     throw new Error('User not found');
