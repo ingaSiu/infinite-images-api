@@ -105,7 +105,9 @@ const getFavorites = asyncHandler(async (req, res) => {
 });
 
 const addFavorite = asyncHandler(async (req, res) => {
-  const { id, url } = req.body;
+  const { id, alt, photographer, src } = req.body;
+
+  const parsedSrc = JSON.parse(src);
 
   const user = await User.findById(req.user._id);
 
@@ -116,7 +118,7 @@ const addFavorite = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error('Image is already in favorites');
     }
-    const favorite = { id, url };
+    const favorite = { id, alt, photographer, src: parsedSrc };
     user.favorites.push(favorite);
 
     await user.save();
