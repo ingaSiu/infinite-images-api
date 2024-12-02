@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import compression from 'compression';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import User from './models/userModel.js';
 
 dotenv.config();
 
@@ -48,7 +49,10 @@ app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
 
-app.get('/', (req, res) => res.send('Server is ready'));
+app.get('/', async (req, res) => {
+  const user = await User.findOne({ email: 'test@test.test' });
+  res.send('Server is ready');
+});
 
 app.use(notFound);
 app.use(errorHandler);
