@@ -6,6 +6,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import userRoutes from './routes/userRoutes.js';
+import compression from 'compression';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 
@@ -15,12 +18,29 @@ connectDB();
 
 const app = express();
 
+//Compress data
+app.use(compression());
+//Application security middlewares START
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      'script-src': ["'self'"],
+    },
+  }),
+);
 app.use(
   cors({
     origin: [process.env.CORS_ORIGIN],
     credentials: true,
   }),
 );
+//Max 20 requests a minute
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+app.use(limiter);
+////Application security middlewares END
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
