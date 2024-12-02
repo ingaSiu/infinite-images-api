@@ -35,7 +35,7 @@ app.use(
   }),
 );
 //Max 20 requests a minute
-const limiter = RateLimit({
+const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 20,
 });
